@@ -34,13 +34,14 @@ func main() {
 
     file, err := os.Open(args.File)
     check(err)
+    defer file.Close()
 
     _, err = file.Seek(24, 0)
     check(err)
 
     r, err := zlib.NewReader(file)
     check(err)
+    defer r.Close()
 
     io.Copy(os.Stdout, r)
-    r.Close()
 }
