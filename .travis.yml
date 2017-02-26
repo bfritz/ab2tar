@@ -1,0 +1,11 @@
+language: go
+
+go:
+  - 1.7.x
+
+script: make
+
+addons:
+  artifacts:
+    paths:
+      - ab2tar
