@@ -2,12 +2,25 @@ package main
 
 import (
     "compress/zlib"
+    "github.com/alexflint/go-arg"
     "io"
     "os"
-    "flag"
 )
 
-var infile = flag.String("f", "", "infile")
+// populated with linker flag `-X main.version=${VERSION}`
+var version string
+
+type args struct {
+    File  string `arg:"positional,required,help:name of Android backup file"`
+}
+
+func (args) Description() string {
+    return "Convert unencrypted Android backup files into tar archives on stdout."
+}
+
+func (args) Version() string {
+    return "ab2tar " + version
+}
 
 func check(e error) {
     if e != nil {
@@ -15,11 +28,11 @@ func check(e error) {
     }
 }
 
-
 func main() {
-    flag.Parse()
+    var args args
+    arg.MustParse(&args)
 
-    file, err := os.Open(*infile)
+    file, err := os.Open(args.File)
     check(err)
 
     _, err = file.Seek(24, 0)

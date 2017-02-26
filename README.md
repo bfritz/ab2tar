@@ -6,4 +6,4 @@ inflates the rest of the zlib-compressed file.
 
 Example usage:
 
-    ab2tar -f com.android.providers.telephony.ab | tar -tvf -
+    ab2tar com.android.providers.telephony.ab | tar -tvf -
